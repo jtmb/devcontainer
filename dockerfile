@@ -11,12 +11,6 @@ RUN \
 	apt install nginx -y && \ 
 	service nginx start
 
-# Install Dev and debug Tools
-RUN \	
-	apt install systemctl -y && \
-	apt install ifconfig -y
-
-
 EXPOSE 8080:80
 	
 CMD ["/bin/bash"]
