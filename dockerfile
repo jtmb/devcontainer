@@ -1,15 +1,26 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Install Vault
+# RUN \
+# 	apt update && apt install -y wget unzip \ 
+# 	&& apt install gpg -y \
+# 	&& wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg >/dev/null \
+# 	&& gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint \
+# 	&& echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
+# 	&& apt install vault -y
+	
+# Install NGNIX and PHP
 RUN \
-	apt update && apt install -y wget unzip \
-	&& wget https://releases.hashicorp.com/vault/1.6.2/vault_1.6.2_linux_amd64.zip \
-	&& unzip vault_1.6.2_linux_amd64.zip	
+	 apt update -y \
+  	 && apt-get install -y --no-install-recommends \
+       	nginx \
+        php-fpm
 
-# Install NGNIX
+# Start Service
 RUN \
-	apt install nginx -y && \ 
-	service nginx start
+	 service nginx start /
+	&& service restart ngnix
 
 EXPOSE 8080:80
 	
